@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^132.0.0",
     "axios": "^1.7.9",
     "canvas": "^3.0.1",
     "icojs": "^0.19.4",
     "next": "15.1.5",
-    "playwright": "^1.49.1",
+    "playwright-core": "^1.50.0",
     "pngjs": "^7.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
