@@ -12,13 +12,13 @@ export default function Home() {
     e.preventDefault();
     setLoading(true); // Start loading
     setError(""); // Reset previous error
-
+  
     if (!url) {
       setError("Please enter a valid URL");
       setLoading(false);
       return;
     }
-
+  
     try {
       const response = await fetch("/api/cardify", {
         method: "POST",
@@ -27,10 +27,18 @@ export default function Home() {
         },
         body: JSON.stringify({ url }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         setCardData(data);
+  
+        // Scroll to #output after the card is successfully generated
+        setTimeout(() => {
+          const outputElement = document.getElementById("output");
+          if (outputElement) {
+            outputElement.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 100);
       } else {
         setError("Error generating the card. Please try again.");
       }
@@ -40,11 +48,12 @@ export default function Home() {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
-      <main className="min-h-screen w-full flex justify-center items-center">
-        <div className="w-1/2 flex justify-center items-center">
+      <main className="min-h-screen w-full flex justify-center items-center md:flex-row flex-col md:gap-0 gap-4">
+        <div className="md:w-1/2 w-full flex justify-center items-center md:h-auto h-screen">
           <form
             onSubmit={handleSubmit}
             className="rounded-lg bg-white border border-neutral-300 shadow max-w-sm w-full flex flex-col p-4 text-neutral-800"
@@ -80,7 +89,7 @@ export default function Home() {
           </form>
         </div>
 
-        <div className="w-1/2 flex justify-center items-center">
+        <div className="md:w-1/2 w-full flex justify-center items-center md:h-auto h-screen" id="output">
           <div className="rounded-lg bg-white border border-neutral-300 shadow max-w-sm w-full flex flex-col p-4 text-neutral-800">
             <h1 className="text-3xl text-center ubuntu font-medium mb-2">Output</h1>
             <div className="border-4 border-neutral-300 rounded h-96 w-full flex justify-center items-center">

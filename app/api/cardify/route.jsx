@@ -22,7 +22,13 @@ export async function POST(req) {
 	let browser;
 	try {
 		browser = await playwright.chromium.launch({
-			args: chromium.args,
+			args: [
+				...chromium.args,
+				'--lang=en-US',
+				'--disable-blink-features=AutomationControlled',
+				'--disable-geolocation',
+				'--no-sandbox',
+			],
 			executablePath: await chromium.executablePath(),
 			headless: true,
 		});
@@ -35,8 +41,8 @@ export async function POST(req) {
 		const faviconUrl = await getFaviconUrl(page);
 
 		const mainColor = processColor(colors.navbarBackground) || processColor(colors.bodyBackgroundColor) || '#ffffff';
-		const headerColor = processColor(colors.headerText) || processColor(colors.bodyTextColor) || '#000000';
-		const anchorColor = processColor(colors.anchorText) || processColor(colors.bodyTextColor) || '#555555';
+		const headerColor = processColor(colors.headerText) || processColor(colors.bodyTextColor) || '#D3D3D3';
+		const anchorColor = processColor(colors.anchorText) || processColor(colors.bodyTextColor) || '#D3D3D3';
 
 		const canvas = createCanvas(canvasWidth, canvasHeight);
 		const ctx = canvas.getContext('2d');
